@@ -15,24 +15,42 @@ targetNum is within the nums array.
 *******************************************************************/
 
 const recurBSearch = (nums, targetNum) => {
-  // Base Case: if nums has no length, return false because we've run out of 
-  // items to search and haven't found targetNum
+  // Base Case: if nums has no length, return false because we've run out of items to search and haven't found targetNum
+  if (nums.length === 1 && nums[0] !== targetNum) return false;
 
   // determine the slice point (ie the 'middle' of the array).
-
+  let middle;
+  if (nums.length % 2 === 0) {
+    middle = nums[nums.length / 2]
+    console.log(middle)
+  } else {
+    middle = nums[(nums.length - 1) / 2]
+    console.log(middle)
+  }
   // create "left half" and "right half" arrays, not including the slice point.
+  let leftHalf = nums.slice(0, middle - 1);
+  let rightHalf = nums.slice(middle + 1);
+  // console.log(leftHalf)
+  // console.log(rightHalf)
+  // console.log(middle)
 
   // if targetNum is less than the value in the array at slice point,
   // return this search on the left half
+  if (targetNum < middle) return recurBSearch(leftHalf, targetNum);
 
   // if targetNum is greater than the value in the array at slice point,
   //return this search on the right half
+  if (targetNum > middle) return recurBSearch(rightHalf, targetNum);
 
   // if it's not greater than or less than (i.e. 'else'),
   // we know it's equal so return true
+  if (targetNum === middle) return true;
 }
 
+let arr1 = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+let arr2 = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 
+console.log(arr1.indexOf((arr1.length) / 2))
 /*******************************************************************
 BINARY SEARCH VERSION 2:
 
