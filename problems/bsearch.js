@@ -47,8 +47,8 @@ const recurBSearch = (nums, targetNum) => {
   if (targetNum === nums[middle]) return true;
 };
 // let arr1 = [1, 2, 3, 4, 5, 6, 7, 8, 9];
-let arr2 = [1, 2, 3, 4, 5];
-console.log(recurBSearch(arr2, 3));
+// let arr2 = [1, 2, 3, 4, 5];
+// console.log(recurBSearch(arr2, 3));
 
 //console.log(arr1.indexOf(arr1.length / 2));
 /*******************************************************************
@@ -98,7 +98,7 @@ const iterBSearch = (nums, targetNum) => {
 // if we finish our while loop and haven't returned true, we've looked over
 // the entire array and didn't find targetNum, so return false
 
-console.log(iterBSearch([1, 2, 3]));
+// console.log(iterBSearch([1, 2, 3]));
 
 /*******************************************************************
 BINARY SEARCH VERSION 3:
@@ -147,8 +147,8 @@ const recurBSearchIdx = (nums, targetNum) => {
   if (targetNum === nums[middle]) return middle;
 };
 
-let arr2 = [1, 2, 3, 4, 5];
-console.log(recurBSearchIdx(arr2, 5));
+// let arr2 = [1, 2, 3, 4, 5];
+// console.log(recurBSearchIdx(arr2, 5));
 /*******************************************************************
 BINARY SEARCH VERSION 4:
 
@@ -156,33 +156,30 @@ Write a Recursive Binary Search that returns the Index value of targetNum if it
 is in the nums array, and -1 if it is not found.
 *******************************************************************/
 
-const recurBSearchIdxV2 = (nums, targetNum, low = null, hi = null) => {
-  /*
-  This implementation is recursive, but borrows the low/hi logic from Version 2
-  to establish a different base case. Rather than shrinking the array until its
-  length is 0, this implementation moves low and hi indices to determine
-  what part of the original array is being searched. if they meet each other
-  we know we have searched the entire array.(NOTE this function has FOUR params)
+const recurBSearchIdxV2 = (nums, targetNum, low = 0, hi = nums.length - 1) => {
+  //This implementation is recursive, but borrows the low/hi logic from Version 2 to establish a different base case. Rather than shrinking the array until its length is 0, this implementation moves low and hi indices to determine what part of the original array is being searched. if they meet each other we know we have searched the entire array.(NOTE this function has FOUR params)
 
-  Base Case: 
-  if low is equal to high and we haven't found targetNum, then return -1 to
-  indicate that the value was not found.
-  
-  Determine the slice point (the difference between low and hi, divided by 2)
+  //Base Case: 
+  //if low is equal to high and we haven't found targetNum, then return -1 to indicate that the value was not found.
+  if (low === hi && nums[low] !== targetNum) return -1;
 
-  If targetNum is less than nums[slicepoint], then
-  return the binary search of nums where low is the beginning of the array, and
-  hi is the middle of the array
+  //Determine the slice point (the sum between low and hi, divided by 2)
+  let midIdx = (hi + low) / 2;
 
-  If targetNum is less than nums[slicepoint], then
-  return the binary search of nums where low is the middle of the array, and hi
-  is the end of the array 
+  //If targetNum is less than nums[slicepoint], then return the binary search of nums where low is the beginning of the array, and hi is the middle of the array
+  if (targetNum < nums[midIdx]) return recurBSearchIdxV2(nums, targetNum, low, midIdx);
 
-  If it's not greater and not less (i.e. 'else'), return the slice point because
-  we have found our value!
-  */
+  //If targetNum is less than nums[slicepoint], then return the binary search of nums where low is the middle of the array, and hi is the end of the array 
+  if (targetNum > nums[midIdx]) return recurBSearchIdxV2(nums, targetNum, midIdx + 1, hi);
+
+  //If it's not greater and not less (i.e. 'else'), return the slice point because we have found our value!
+  else {
+    return midIdx;
+  }
 };
 
+let arr2 = [1, 2, 3, 4, 5];
+console.log(recurBSearchIdx(arr2, 55));
 /*******************************************************************
 BINARY SEARCH VERSION 5:
 
